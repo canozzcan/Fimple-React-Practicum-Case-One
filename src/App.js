@@ -1,9 +1,15 @@
-import Header from "./components/Header";
+import Header from "./components/header/Header";
+import PlayersConfig from "./components/playersConfig/PlayersConfig";
+
+
 
 function App() {
+
   return (
     <div >
-      <Header/>
+      <Header />
+      <PlayersConfig/>
+      
     </div>
   );
 }
