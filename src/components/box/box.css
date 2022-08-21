@@ -1,0 +1,21 @@
+.box {
+  background-color: rgb(215, 187, 247);
+  border: none;
+  border-radius: 10%;
+  width: 5rem;
+  height: 5rem;
+  text-align: center;
+  font-size: 4em;
+  font-weight: bold;
+  color: white;
+}
+
+.box:hover {
+  background-color: rgb(112, 13, 204);
+  cursor: pointer;
+}
+
+.clicked {
+  background-color: rgb(112, 13, 204);
+  cursor: none;
+}
