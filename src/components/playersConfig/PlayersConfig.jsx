@@ -1,6 +1,6 @@
 import './playersConfig.css'
 
-const PlayersConfig = ({playerOne, playerTwo, handleShowModalOne, handleShowModalTwo, checkPlayerNames}) => {
+const PlayersConfig = ({playerOne, playerTwo, handleShowModalOne, handleShowModalTwo, startNewGame}) => {
   return (
     <div className="playersConfig">
           <ol>
@@ -31,7 +31,7 @@ const PlayersConfig = ({playerOne, playerTwo, handleShowModalOne, handleShowModa
               </div>
             </li>
           </ol>
-          <button onClick={checkPlayerNames} className="btn">Start New Game</button>
+          <button onClick={startNewGame} className="btn">Start New Game</button>
         </div>
   )
 }

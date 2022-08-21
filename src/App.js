@@ -8,6 +8,7 @@ import Board from "./components/board/Board";
 import Winner from './components/winner/Winner';
 
 
+
 function App() {
 
   const WIN_CONDITIONS = [
@@ -28,6 +29,7 @@ function App() {
   const [board, setBoard] = useState(Array(9).fill(null));
   const [xPlaying, setXPlaying] = useState(true);
   const [winner, setWinner] = useState("");
+  const [gameOver, setGameOver] = useState(false);
 
   const cancelPlayerOne = () => {
     setShowModalOne(false);
@@ -61,11 +63,15 @@ function App() {
     setShowModalTwo(false);
   };
 
-  const checkPlayerNames = () => {
+  const startNewGame = () => {
     if (!playerOne || !playerTwo) {
       alert("Please set custom player names for both players!");
       return
     }
+
+    setGameOver(false);
+    setBoard(Array(9).fill(null));
+    setWinner("");
   }
 
   const handleBoxClick = (boxIndex) => {
@@ -99,24 +105,28 @@ function App() {
       const [x, y, z] = WIN_CONDITIONS[i];
 
       if (board[x] && board[x] === board[y] && board[y] === board[z]) {
-        console.log(board[x])
+        setGameOver(true)
         return board[x];
       }
 
     }
   }
 
-
+  const resetBoard = () => {
+    setGameOver(false);
+    setBoard(Array(9).fill(null));
+    setWinner("");
+  }
 
   return (
     <div className='app'>
       <Header />
       {showModalOne && <ModalOne handleSubmit={handleSubmit} handlePlayerOne={handlePlayerOne} playerOne={playerOne} cancelPlayerOne={cancelPlayerOne} />}
       {showModalTwo && <ModalTwo handleSubmit={handleSubmit} handlePlayerTwo={handlePlayerTwo} playerTwo={playerTwo} cancelPlayerTwo={cancelPlayerTwo} />}
-      <PlayersConfig playerOne={playerOne} playerTwo={playerTwo} handleShowModalOne={handleShowModalOne} handleShowModalTwo={handleShowModalTwo} checkPlayerNames={checkPlayerNames} />
+      <PlayersConfig playerOne={playerOne} playerTwo={playerTwo} handleShowModalOne={handleShowModalOne} handleShowModalTwo={handleShowModalTwo} startNewGame={startNewGame} />
       {winner && <Winner winner={winner} />}
       {(playerOne && playerTwo) && <p className='p'>It's your turn <strong className='currentPlayer'> {xPlaying === true ? playerOne : playerTwo}</strong></p>}
-      {(playerOne && playerTwo) && <Board board={board} onClick={handleBoxClick} />}
+      {(playerOne && playerTwo) && <Board board={board} onClick={gameOver ? resetBoard : handleBoxClick} />}
     </div>
   );
 }
