@@ -30,6 +30,7 @@ function App() {
   const [xPlaying, setXPlaying] = useState(true);
   const [winner, setWinner] = useState("");
   const [gameOver, setGameOver] = useState(false);
+  const [clickCount, setClickCount] = useState(0);
 
   const cancelPlayerOne = () => {
     setShowModalOne(false);
@@ -71,6 +72,7 @@ function App() {
 
     setGameOver(false);
     setBoard(Array(9).fill(null));
+    setClickCount(0);
     setWinner("");
   }
 
@@ -96,7 +98,7 @@ function App() {
 
 
     setBoard(uptadeBoard);
-
+    setClickCount(clickCount + 1);
     setXPlaying(!xPlaying);
   }
 
@@ -106,9 +108,11 @@ function App() {
 
       if (board[x] && board[x] === board[y] && board[y] === board[z]) {
         setGameOver(true)
+        if (setGameOver) {
+          setClickCount(0);
+        }
         return board[x];
       }
-
     }
   }
 
@@ -116,6 +120,7 @@ function App() {
     setGameOver(false);
     setBoard(Array(9).fill(null));
     setWinner("");
+    setClickCount(0);
   }
 
   return (
@@ -124,7 +129,7 @@ function App() {
       {showModalOne && <ModalOne handleSubmit={handleSubmit} handlePlayerOne={handlePlayerOne} playerOne={playerOne} cancelPlayerOne={cancelPlayerOne} />}
       {showModalTwo && <ModalTwo handleSubmit={handleSubmit} handlePlayerTwo={handlePlayerTwo} playerTwo={playerTwo} cancelPlayerTwo={cancelPlayerTwo} />}
       <PlayersConfig playerOne={playerOne} playerTwo={playerTwo} handleShowModalOne={handleShowModalOne} handleShowModalTwo={handleShowModalTwo} startNewGame={startNewGame} />
-      {winner && <Winner winner={winner} />}
+      <Winner winner={winner} clickCount={clickCount} />
       {(playerOne && playerTwo) && <p className='p'>It's your turn <strong className='currentPlayer'> {xPlaying === true ? playerOne : playerTwo}</strong></p>}
       {(playerOne && playerTwo) && <Board board={board} onClick={gameOver ? resetBoard : handleBoxClick} />}
     </div>
